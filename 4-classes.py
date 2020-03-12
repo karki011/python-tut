@@ -19,12 +19,14 @@
 
 # Inhertiance
 
+from abc import ABC, abstractmethod  # this makes it abstract
 
-class InvalidOperationError(Exception):
+
+class InvalidOperationError(Exception):  # custom Error
     pass
 
 
-class Stream:
+class Stream(ABC):  # make it abstract
     def __init__(self):
         self.opened = False
 
@@ -38,6 +40,10 @@ class Stream:
             raise InvalidOperationError("Stream already closed")
         self.opened = False
 
+    @abstractmethod
+    def read(self):
+        pass
+
 
 class FileStream(Stream):
     def read(self):
@@ -49,4 +55,6 @@ class NetworkStream(Stream):
         print("Reading data from a network")
 
 
-
+stream = FileStream()
+isOpen = not stream.opened
+print(isOpen)
